@@ -812,6 +812,18 @@ textarea.text-input { height: auto; resize: vertical; }
   margin-bottom: var(--space-xs);
 }
 
+.modal-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xxs);
+  margin-top: var(--space-sm);
+}
+
+.modal-resources .btn {
+  height: 40px;
+  padding: 0 var(--space-sm);
+}
+
 .modal-details li::before {
   content: "";
   position: absolute;

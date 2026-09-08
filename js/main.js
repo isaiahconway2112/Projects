@@ -115,8 +115,10 @@
       (project.tools && project.tools.length
         ? '<p class="caption-label">Tools</p><div class="chip-row">' + project.tools.map(function (t) { return '<span class="badge-pill">' + t + '</span>'; }).join("") + '</div>'
         : "") +
-      (project.link
-        ? '<a href="' + project.link + '" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:24px">View more ↗</a>'
+      (project.resources && project.resources.length
+        ? '<div class="modal-resources">' + project.resources.map(function (r) {
+            return '<a href="' + r.url + '" target="_blank" rel="noopener" class="btn btn-outline">' + r.label + ' ↗</a>';
+          }).join("") + '</div>'
         : "");
 
     modalOverlay.classList.add("is-open");

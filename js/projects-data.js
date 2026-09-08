@@ -11,10 +11,13 @@
  *   tools    - array of software/tools used
  *   summary  - one or two sentence description shown on the card
  *   details  - array of bullet points shown when the card is expanded
- *   link     - optional URL (external writeup, repo, etc.) — set to "" to omit
  *   image    - optional path to a photo/render, e.g. "assets/projects/uav-wing.jpg".
  *              Drop the file into the assets/projects/ folder and point to it here.
  *              Leave as "" to fall back to the plain initials plate.
+ *   resources - optional array of external links shown as buttons in the detail view,
+ *              e.g. a Google Drive / OneDrive folder with documentation, CAD files, etc.
+ *              Each entry is { label: "Documentation", url: "https://..." }.
+ *              Leave as [] to show none.
  */
 
 const PROJECTS = [
@@ -31,8 +34,8 @@ const PROJECTS = [
       "Designing the airfoil and wing planform and generating lift/drag polars in XFLR5.",
       "Running structural design and FEA in SolidWorks, with CFD validation in SimScale."
     ],
-    link: "",
-    image: ""
+    image: "",
+    resources: []
   },
   {
     id: "fsae-rear-wing",
@@ -47,7 +50,7 @@ const PROJECTS = [
       "Selected airfoil profiles using real-world aerodynamic data to balance downforce against drag across the car's operating speed range.",
       "Modeled and validated the assembly in SolidWorks to meet FSAE rulebook legality and mounting requirements."
     ],
-    link: "",
-    image: ""
+    image: "",
+    resources: []
   }
 ];
