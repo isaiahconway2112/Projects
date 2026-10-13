@@ -57,8 +57,8 @@
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", "View details for " + project.title);
 
-      const media = project.image
-        ? '<img class="project-card-image" src="' + project.image + '" alt="' + project.title + '">'
+      const media = (project.images && project.images.length)
+        ? '<img class="project-card-image" src="' + project.images[0] + '" alt="' + project.title + '">'
         : '<div class="project-card-plate" aria-hidden="true"><span>' + initials(project.title) + '</span></div>';
 
       card.innerHTML =
@@ -103,9 +103,21 @@
   });
 
   function openModal(project) {
+    const hasGallery = project.images && project.images.length > 0;
+    const hasMultiple = project.images && project.images.length > 1;
+
     modalContent.innerHTML =
-      (project.image
-        ? '<img class="modal-image" src="' + project.image + '" alt="' + project.title + '">'
+      (hasGallery
+        ? '<div class="modal-gallery">' +
+            '<img class="modal-gallery-main" id="modal-gallery-main" src="' + project.images[0] + '" alt="' + project.title + '">' +
+            (hasMultiple
+              ? '<div class="modal-gallery-thumbs">' +
+                  project.images.map(function (src, i) {
+                    return '<img class="modal-gallery-thumb' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" src="' + src + '" alt="' + project.title + ' photo ' + (i + 1) + '">';
+                  }).join("") +
+                '</div>'
+              : "") +
+          '</div>'
         : "") +
       '<p class="eyebrow">' + project.org + ' · ' + project.date + '</p>' +
       '<h2 class="modal-title" id="modal-title">' + project.title + '</h2>' +
@@ -120,6 +132,19 @@
             return '<a href="' + r.url + '" target="_blank" rel="noopener" class="btn btn-outline">' + r.label + ' ↗</a>';
           }).join("") + '</div>'
         : "");
+
+    if (hasMultiple) {
+      const mainImg = document.getElementById("modal-gallery-main");
+      modalContent.querySelectorAll(".modal-gallery-thumb").forEach(function (thumb) {
+        thumb.addEventListener("click", function () {
+          mainImg.src = project.images[Number(thumb.dataset.index)];
+          modalContent.querySelectorAll(".modal-gallery-thumb").forEach(function (t) {
+            t.classList.remove("is-active");
+          });
+          thumb.classList.add("is-active");
+        });
+      });
+    }
 
     modalOverlay.classList.add("is-open");
     modalOverlay.setAttribute("aria-hidden", "false");
